@@ -3,59 +3,48 @@ import Foundation
 import Parsing
 
 class swiftmal_test: XCTestCase {
-    func test1() throws {
-        let actual = READ("  123 ")
-        
-        XCTAssertEqual(actual, Expression.int(123))
-    }
-    
-    func test2() throws {
-        let actual = READ(" abc   ")
-        
-        XCTAssertEqual(actual, Expression.string("abc"))
-    }
-    
-    func test3() throws {
-        let actual = READ(" ( abc  ) ")
-        
-        XCTAssertEqual(actual, Expression.list(symbol: "abc", params: []))
-    }
-    
-    func test4() throws {
-        let actual = READ(" (  abc  def  sss 22 )  ")
-        
+    func testRead() throws {
+        XCTAssertEqual(READ("  123 "), Expression.int(123))
+        XCTAssertEqual(READ("  -123 "), Expression.int(-123))
+        XCTAssertEqual(READ(" abc   "), Expression.symbol("abc"))
+        XCTAssertEqual(READ(" -abc-def   "), Expression.symbol("-abc-def"))
+        XCTAssertEqual(READ(" ( abc  ) "), Expression.list(symbol: "abc", params: []))
         XCTAssertEqual(
-            actual,
+            READ(" (  abc  def  sss 22 )  "),
             Expression.list(
                 symbol: "abc",
-                params: [.string("def"), .string("sss"), .int(22)]
+                params: [.symbol("def"), .symbol("sss"), .int(22)]
             )
         )
-    }
-    
-    func test5() throws {
-        let actual = READ(" ( abc ( aa ) ) ")
-        
         XCTAssertEqual(
-            actual,
+            READ(" ( abc ( aa ) ) "),
             Expression.list(
                 symbol: "abc",
                 params: [.list(symbol: "aa", params: [])]
             )
         )
-    }
-    
-    func test6() throws {
-        let actual = READ("   (d dd 3)")
-        
         XCTAssertEqual(
-            actual,
+            READ("   (d dd 3)"),
             Expression.list(
                 symbol: "d",
-                params: [.string("dd"), .int(3)]
+                params: [.symbol("dd"), .int(3)]
+            )
+        )
+        XCTAssertEqual(
+            READ("( + 2 (* 3 4) )"),
+            Expression.list(
+                symbol: "+",
+                params: [
+                    .int(2),
+                    .list(
+                        symbol: "*",
+                        params: [
+                            .int(3),
+                            .int(4)
+                        ]
+                    )
+                ]
             )
         )
     }
-    
- 
 }

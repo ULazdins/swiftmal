@@ -1,7 +1,7 @@
 public enum Expression: Equatable {
     indirect case list(symbol: String, params: [Expression])
     case int(Int)
-    case string(String)
+    case symbol(String)
     
     func print() -> String {
         switch self {
@@ -9,7 +9,7 @@ public enum Expression: Equatable {
             return "(\(symbol) \(params.map({$0.print()}).joined(separator:" ")))"
         case .int(let int):
             return "\(int)"
-        case .string(let string):
+        case .symbol(let string):
             return "\(string)"
         }
     }

@@ -12,7 +12,7 @@ var lisp: AnyParser<Substring, Expression> = Skip(whitespace)
 private var expression: AnyParser<Substring, Expression> {
     int
         .orElse(array)
-        .orElse(string)
+        .orElse(symbol)
         .eraseToAnyParser()
 }
 
@@ -20,25 +20,27 @@ let int: AnyParser<Substring, Expression> = Int.parser()
     .map(Expression.int)
     .eraseToAnyParser()
 
-let string2: AnyParser<Substring, Substring> = Prefix<Substring>(
+let symbolCharacterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "+-/*"))
+
+let string: AnyParser<Substring, Substring> = Prefix<Substring>(
     minLength: 1,
     maxLength: nil,
     while: { (e: Character) in
         let chars = CharacterSet(charactersIn: String(e))
-        return CharacterSet.alphanumerics.isSuperset(of: chars)
+        return symbolCharacterSet.isSuperset(of: chars)
     })
     .eraseToAnyParser()
 
-let string: AnyParser<Substring, Expression> = string2
+let symbol: AnyParser<Substring, Expression> = string
     .map({
-        Expression.string(String($0))
+        Expression.symbol(String($0))
     })
     .eraseToAnyParser()
 
 let array: AnyParser<Substring, Expression> = Skip(whitespace)
     .skip(StartsWith("("))
     .skip(whitespace)
-    .take(string2)
+    .take(string)
     .skip(whitespace)
     .take(Many(Lazy{
         expression
