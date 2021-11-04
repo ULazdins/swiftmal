@@ -47,4 +47,33 @@ class swiftmal_test: XCTestCase {
             )
         )
     }
+    
+    func testEval() throws {
+        XCTAssertEqual(
+            EVAL(
+                Expression.list(
+                    symbol: "+",
+                    params: [.int(2), .int(3)]
+                )
+            ),
+            Expression.int(5)
+        )
+        XCTAssertEqual(
+            EVAL(
+                Expression.list(
+                    symbol: "+",
+                    params: [
+                        .int(2),
+                        .list(
+                            symbol: "*",
+                            params: [.int(3), .int(4)]
+                        )
+                    ]
+                )
+            ),
+            Expression.int(14)
+        )
+        
+        XCTAssertNil(EVAL(Expression.list(symbol: "Z", params: [.int(2), .int(3)])))
+    }
 }

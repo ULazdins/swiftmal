@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Expression: Equatable {
     indirect case list(symbol: String, params: [Expression])
     case int(Int)
@@ -11,6 +13,15 @@ public enum Expression: Equatable {
             return "\(int)"
         case .symbol(let string):
             return "\(string)"
+        }
+    }
+    
+    func getInt() throws -> Int {
+        switch self {
+        case .int(let int):
+            return int
+        default:
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Not an integer"])
         }
     }
 }

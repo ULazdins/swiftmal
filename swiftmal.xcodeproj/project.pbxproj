@@ -16,6 +16,10 @@
 		753DAB072732560C007A5058 /* parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DAB0127325399007A5058 /* parsing.swift */; };
 		753DAB0827325610007A5058 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DAAED27325309007A5058 /* main.swift */; };
 		753DAB0B2732562B007A5058 /* Parsing in Frameworks */ = {isa = PBXBuildFile; productRef = 753DAB0A2732562B007A5058 /* Parsing */; };
+		75DBFAE827344F74001399EC /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE727344F74001399EC /* Environment.swift */; };
+		75DBFAEA27344FEB001399EC /* eval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE927344FEB001399EC /* eval.swift */; };
+		75DBFAEB27344FEB001399EC /* eval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE927344FEB001399EC /* eval.swift */; };
+		75DBFAEC27344FF0001399EC /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE727344F74001399EC /* Environment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +41,8 @@
 		753DAAFA27325335007A5058 /* swiftmal_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftmal_test.swift; sourceTree = "<group>"; };
 		753DAAFF27325371007A5058 /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
 		753DAB0127325399007A5058 /* parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parsing.swift; sourceTree = "<group>"; };
+		75DBFAE727344F74001399EC /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		75DBFAE927344FEB001399EC /* eval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eval.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,8 @@
 				753DAAED27325309007A5058 /* main.swift */,
 				753DAAFF27325371007A5058 /* Expression.swift */,
 				753DAB0127325399007A5058 /* parsing.swift */,
+				75DBFAE727344F74001399EC /* Environment.swift */,
+				75DBFAE927344FEB001399EC /* eval.swift */,
 			);
 			path = swiftmal;
 			sourceTree = "<group>";
@@ -201,7 +209,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75DBFAEA27344FEB001399EC /* eval.swift in Sources */,
 				753DAB0227325399007A5058 /* parsing.swift in Sources */,
+				75DBFAE827344F74001399EC /* Environment.swift in Sources */,
 				753DAAEE27325309007A5058 /* main.swift in Sources */,
 				753DAB0027325371007A5058 /* Expression.swift in Sources */,
 			);
@@ -211,6 +221,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75DBFAEB27344FEB001399EC /* eval.swift in Sources */,
+				75DBFAEC27344FF0001399EC /* Environment.swift in Sources */,
 				753DAB072732560C007A5058 /* parsing.swift in Sources */,
 				753DAAFB27325335007A5058 /* swiftmal_test.swift in Sources */,
 				753DAB0827325610007A5058 /* main.swift in Sources */,

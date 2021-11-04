@@ -16,7 +16,7 @@ func READ(_ s: String) -> Expression? {
 }
 
 func EVAL(_ s: Expression?) -> Expression? {
-    return s
+    return try? s.map(eval)
 }
 
 func PRINT(_ s: Expression?) -> String {
