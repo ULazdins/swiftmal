@@ -75,5 +75,7 @@ class swiftmal_test: XCTestCase {
         )
         
         XCTAssertNil(EVAL(Expression.list(symbol: "Z", params: [.int(2), .int(3)])))
+        
+        XCTAssertEqual(rep("(/ (- (+ 515 (* -87 311)) 296) 27)"), "-994")
     }
 }
