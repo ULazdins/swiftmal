@@ -16,6 +16,10 @@
 		753DAB072732560C007A5058 /* parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DAB0127325399007A5058 /* parsing.swift */; };
 		753DAB0827325610007A5058 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DAAED27325309007A5058 /* main.swift */; };
 		753DAB0B2732562B007A5058 /* Parsing in Frameworks */ = {isa = PBXBuildFile; productRef = 753DAB0A2732562B007A5058 /* Parsing */; };
+		75AEB6D6273AD9810073352E /* SwiftmalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AEB6D5273AD9810073352E /* SwiftmalError.swift */; };
+		75AEB6D7273AD9920073352E /* SwiftmalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AEB6D5273AD9810073352E /* SwiftmalError.swift */; };
+		75AEB6DA273AD9F00073352E /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 75AEB6D9273AD9F00073352E /* CasePaths */; };
+		75AEB6DC273AEA680073352E /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 75AEB6DB273AEA680073352E /* CasePaths */; };
 		75DBFAE827344F74001399EC /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE727344F74001399EC /* Environment.swift */; };
 		75DBFAEA27344FEB001399EC /* eval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE927344FEB001399EC /* eval.swift */; };
 		75DBFAEB27344FEB001399EC /* eval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE927344FEB001399EC /* eval.swift */; };
@@ -41,6 +45,7 @@
 		753DAAFA27325335007A5058 /* swiftmal_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftmal_test.swift; sourceTree = "<group>"; };
 		753DAAFF27325371007A5058 /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
 		753DAB0127325399007A5058 /* parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parsing.swift; sourceTree = "<group>"; };
+		75AEB6D5273AD9810073352E /* SwiftmalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftmalError.swift; sourceTree = "<group>"; };
 		75DBFAE727344F74001399EC /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		75DBFAE927344FEB001399EC /* eval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eval.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,6 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				753DAB05273253DA007A5058 /* Parsing in Frameworks */,
+				75AEB6DA273AD9F00073352E /* CasePaths in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				753DAB0B2732562B007A5058 /* Parsing in Frameworks */,
+				75AEB6DC273AEA680073352E /* CasePaths in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +99,7 @@
 				753DAB0127325399007A5058 /* parsing.swift */,
 				75DBFAE727344F74001399EC /* Environment.swift */,
 				75DBFAE927344FEB001399EC /* eval.swift */,
+				75AEB6D5273AD9810073352E /* SwiftmalError.swift */,
 			);
 			path = swiftmal;
 			sourceTree = "<group>";
@@ -129,6 +137,7 @@
 			name = swiftmal;
 			packageProductDependencies = (
 				753DAB04273253DA007A5058 /* Parsing */,
+				75AEB6D9273AD9F00073352E /* CasePaths */,
 			);
 			productName = swiftmal;
 			productReference = 753DAAEA27325309007A5058 /* swiftmal */;
@@ -149,6 +158,7 @@
 			name = swiftmal_test;
 			packageProductDependencies = (
 				753DAB0A2732562B007A5058 /* Parsing */,
+				75AEB6DB273AEA680073352E /* CasePaths */,
 			);
 			productName = swiftmal_test;
 			productReference = 753DAAF827325335007A5058 /* swiftmal_test.xctest */;
@@ -183,6 +193,7 @@
 			mainGroup = 753DAAE127325309007A5058;
 			packageReferences = (
 				753DAB03273253DA007A5058 /* XCRemoteSwiftPackageReference "swift-parsing" */,
+				75AEB6D8273AD9F00073352E /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 			);
 			productRefGroup = 753DAAEB27325309007A5058 /* Products */;
 			projectDirPath = "";
@@ -210,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75DBFAEA27344FEB001399EC /* eval.swift in Sources */,
+				75AEB6D6273AD9810073352E /* SwiftmalError.swift in Sources */,
 				753DAB0227325399007A5058 /* parsing.swift in Sources */,
 				75DBFAE827344F74001399EC /* Environment.swift in Sources */,
 				753DAAEE27325309007A5058 /* main.swift in Sources */,
@@ -223,6 +235,7 @@
 			files = (
 				75DBFAEB27344FEB001399EC /* eval.swift in Sources */,
 				75DBFAEC27344FF0001399EC /* Environment.swift in Sources */,
+				75AEB6D7273AD9920073352E /* SwiftmalError.swift in Sources */,
 				753DAB072732560C007A5058 /* parsing.swift in Sources */,
 				753DAAFB27325335007A5058 /* swiftmal_test.swift in Sources */,
 				753DAB0827325610007A5058 /* main.swift in Sources */,
@@ -447,6 +460,14 @@
 				kind = branch;
 			};
 		};
+		75AEB6D8273AD9F00073352E /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -459,6 +480,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 753DAB03273253DA007A5058 /* XCRemoteSwiftPackageReference "swift-parsing" */;
 			productName = Parsing;
+		};
+		75AEB6D9273AD9F00073352E /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75AEB6D8273AD9F00073352E /* XCRemoteSwiftPackageReference "swift-case-paths" */;
+			productName = CasePaths;
+		};
+		75AEB6DB273AEA680073352E /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75AEB6D8273AD9F00073352E /* XCRemoteSwiftPackageReference "swift-case-paths" */;
+			productName = CasePaths;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

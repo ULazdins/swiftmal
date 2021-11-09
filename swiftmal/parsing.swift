@@ -11,7 +11,7 @@ var lisp: AnyParser<Substring, Expression> = Skip(whitespace)
 
 private var expression: AnyParser<Substring, Expression> {
     int
-        .orElse(array)
+        .orElse(list)
         .orElse(symbol)
         .eraseToAnyParser()
 }
@@ -37,10 +37,8 @@ let symbol: AnyParser<Substring, Expression> = string
     })
     .eraseToAnyParser()
 
-let array: AnyParser<Substring, Expression> = Skip(whitespace)
+let list: AnyParser<Substring, Expression> = Skip(whitespace)
     .skip(StartsWith("("))
-    .skip(whitespace)
-    .take(string)
     .skip(whitespace)
     .take(Many(Lazy{
         expression
@@ -49,6 +47,6 @@ let array: AnyParser<Substring, Expression> = Skip(whitespace)
     .skip(StartsWith(")"))
     .skip(whitespace)
     .map {
-        return Expression.list(symbol: String($0), params: $1)
+        return Expression.list($0)
     }
     .eraseToAnyParser()
