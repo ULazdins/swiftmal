@@ -11,6 +11,8 @@ var lisp: AnyParser<Substring, Expression> = Skip(whitespace)
 
 private var expression: AnyParser<Substring, Expression> {
     int
+        .orElse(`nil`)
+        .orElse(bool)
         .orElse(list)
         .orElse(symbol)
         .eraseToAnyParser()
@@ -18,6 +20,25 @@ private var expression: AnyParser<Substring, Expression> {
 
 let int: AnyParser<Substring, Expression> = Int.parser()
     .map(Expression.int)
+    .eraseToAnyParser()
+
+let `nil`: AnyParser<Substring, Expression> = Skip(whitespace)
+    .skip(StartsWith("nil"))
+    .map { _ in Expression.nil }
+    .eraseToAnyParser()
+
+let `true`: AnyParser<Substring, Expression> = Skip(whitespace)
+    .take(StartsWith("true"))
+    .map { _ in Expression.bool(true) }
+    .eraseToAnyParser()
+
+let `false`: AnyParser<Substring, Expression> = Skip(whitespace)
+    .take(StartsWith("false"))
+    .map { _ in Expression.bool(false) }
+    .eraseToAnyParser()
+
+let bool: AnyParser<Substring, Expression> = Skip(whitespace)
+    .take(`true`.orElse(`false`))
     .eraseToAnyParser()
 
 let symbolCharacterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "+-/*!"))
@@ -46,7 +67,5 @@ let list: AnyParser<Substring, Expression> = Skip(whitespace)
     .skip(whitespace)
     .skip(StartsWith(")"))
     .skip(whitespace)
-    .map {
-        return Expression.list($0)
-    }
+    .map { return Expression.list($0) }
     .eraseToAnyParser()

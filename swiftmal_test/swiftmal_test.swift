@@ -90,4 +90,17 @@ class swiftmal_test: XCTestCase {
         XCTAssertEqual(try rep("(def! y (let* (z 7) z))", environment: root), "7")
         XCTAssertEqual(try rep("y", environment: root), "7")
     }
+    
+    func testNilAndBoolean() throws {
+        let root = Environment.getRoot()
+        
+        XCTAssertEqual(try READ("  nil "), Expression.nil)
+        XCTAssertEqual(try rep("nil", environment: root), "nil")
+        
+        XCTAssertEqual(try READ("  false  "), Expression.bool(false))
+        XCTAssertEqual(try rep("false", environment: root), "false")
+        
+        XCTAssertEqual(try READ("  true  "), Expression.bool(true))
+        XCTAssertEqual(try rep("true", environment: root), "true")
+    }
 }

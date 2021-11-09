@@ -15,7 +15,7 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
         } else {
             return .list(params)
         }
-    case .int:
+    case .int, .nil, .bool:
         return exp
     case .symbol(let string):
         let symbol = try environment.find(string)
