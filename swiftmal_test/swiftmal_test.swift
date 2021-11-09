@@ -4,34 +4,34 @@ import Parsing
 
 class swiftmal_test: XCTestCase {
     func testRead() throws {
-        XCTAssertEqual(READ("  123 "), Expression.int(123))
-        XCTAssertEqual(READ("  -123 "), Expression.int(-123))
-        XCTAssertEqual(READ(" abc   "), Expression.symbol("abc"))
-        XCTAssertEqual(READ(" -abc-def   "), Expression.symbol("-abc-def"))
-        XCTAssertEqual(READ(" ( abc  ) "), Expression.list(symbol: "abc", params: []))
+        XCTAssertEqual(try READ("  123 "), Expression.int(123))
+        XCTAssertEqual(try READ("  -123 "), Expression.int(-123))
+        XCTAssertEqual(try READ(" abc   "), Expression.symbol("abc"))
+        XCTAssertEqual(try READ(" -abc-def   "), Expression.symbol("-abc-def"))
+        XCTAssertEqual(try READ(" ( abc  ) "), Expression.list(symbol: "abc", params: []))
         XCTAssertEqual(
-            READ(" (  abc  def  sss 22 )  "),
+            try READ(" (  abc  def  sss 22 )  "),
             Expression.list(
                 symbol: "abc",
                 params: [.symbol("def"), .symbol("sss"), .int(22)]
             )
         )
         XCTAssertEqual(
-            READ(" ( abc ( aa ) ) "),
+            try READ(" ( abc ( aa ) ) "),
             Expression.list(
                 symbol: "abc",
                 params: [.list(symbol: "aa", params: [])]
             )
         )
         XCTAssertEqual(
-            READ("   (d dd 3)"),
+            try READ("   (d dd 3)"),
             Expression.list(
                 symbol: "d",
                 params: [.symbol("dd"), .int(3)]
             )
         )
         XCTAssertEqual(
-            READ("( + 2 (* 3 4) )"),
+            try READ("( + 2 (* 3 4) )"),
             Expression.list(
                 symbol: "+",
                 params: [
@@ -50,7 +50,7 @@ class swiftmal_test: XCTestCase {
     
     func testEval() throws {
         XCTAssertEqual(
-            EVAL(
+            try EVAL(
                 Expression.list(
                     symbol: "+",
                     params: [.int(2), .int(3)]
@@ -59,7 +59,7 @@ class swiftmal_test: XCTestCase {
             Expression.int(5)
         )
         XCTAssertEqual(
-            EVAL(
+            try EVAL(
                 Expression.list(
                     symbol: "+",
                     params: [
@@ -74,8 +74,17 @@ class swiftmal_test: XCTestCase {
             Expression.int(14)
         )
         
-        XCTAssertNil(EVAL(Expression.list(symbol: "Z", params: [.int(2), .int(3)])))
+        XCTAssertThrowsError(try EVAL(Expression.list(symbol: "Z", params: [.int(2), .int(3)])))
         
-        XCTAssertEqual(rep("(/ (- (+ 515 (* -87 311)) 296) 27)"), "-994")
+        XCTAssertEqual(try rep("(/ (- (+ 515 (* -87 311)) 296) 27)"), "-994")
+    }
+    
+    func testEnvironment() throws {
+        XCTAssertEqual(try rep("(def! x 3)"), "3")
+        XCTAssertEqual(try rep("x"), "3")
+        XCTAssertEqual(try rep("(def! x 4)"), "4")
+        XCTAssertEqual(try rep("x"), "4")
+        XCTAssertEqual(try rep("(def! y (+ 1 7))"), "8")
+        XCTAssertEqual(try rep("y"), "8")
     }
 }

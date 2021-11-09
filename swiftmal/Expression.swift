@@ -24,4 +24,13 @@ public enum Expression: Equatable {
             throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Not an integer"])
         }
     }
+    
+    func getSymbol() throws -> String {
+        switch self {
+        case .symbol(let symbol):
+            return symbol
+        default:
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Not a symbol"])
+        }
+    }
 }

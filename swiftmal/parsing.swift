@@ -20,7 +20,7 @@ let int: AnyParser<Substring, Expression> = Int.parser()
     .map(Expression.int)
     .eraseToAnyParser()
 
-let symbolCharacterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "+-/*"))
+let symbolCharacterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "+-/*!"))
 
 let string: AnyParser<Substring, Substring> = Prefix<Substring>(
     minLength: 1,
