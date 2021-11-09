@@ -20,6 +20,8 @@
 		75AEB6D7273AD9920073352E /* SwiftmalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AEB6D5273AD9810073352E /* SwiftmalError.swift */; };
 		75AEB6DA273AD9F00073352E /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 75AEB6D9273AD9F00073352E /* CasePaths */; };
 		75AEB6DC273AEA680073352E /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 75AEB6DB273AEA680073352E /* CasePaths */; };
+		75AEB6DE273B28DE0073352E /* Collection+extract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AEB6DD273B28DE0073352E /* Collection+extract.swift */; };
+		75AEB6DF273B28DE0073352E /* Collection+extract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AEB6DD273B28DE0073352E /* Collection+extract.swift */; };
 		75DBFAE827344F74001399EC /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE727344F74001399EC /* Environment.swift */; };
 		75DBFAEA27344FEB001399EC /* eval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE927344FEB001399EC /* eval.swift */; };
 		75DBFAEB27344FEB001399EC /* eval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DBFAE927344FEB001399EC /* eval.swift */; };
@@ -46,6 +48,7 @@
 		753DAAFF27325371007A5058 /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
 		753DAB0127325399007A5058 /* parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parsing.swift; sourceTree = "<group>"; };
 		75AEB6D5273AD9810073352E /* SwiftmalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftmalError.swift; sourceTree = "<group>"; };
+		75AEB6DD273B28DE0073352E /* Collection+extract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extract.swift"; sourceTree = "<group>"; };
 		75DBFAE727344F74001399EC /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		75DBFAE927344FEB001399EC /* eval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eval.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +103,7 @@
 				75DBFAE727344F74001399EC /* Environment.swift */,
 				75DBFAE927344FEB001399EC /* eval.swift */,
 				75AEB6D5273AD9810073352E /* SwiftmalError.swift */,
+				75AEB6DD273B28DE0073352E /* Collection+extract.swift */,
 			);
 			path = swiftmal;
 			sourceTree = "<group>";
@@ -225,6 +229,7 @@
 				753DAB0227325399007A5058 /* parsing.swift in Sources */,
 				75DBFAE827344F74001399EC /* Environment.swift in Sources */,
 				753DAAEE27325309007A5058 /* main.swift in Sources */,
+				75AEB6DE273B28DE0073352E /* Collection+extract.swift in Sources */,
 				753DAB0027325371007A5058 /* Expression.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +243,7 @@
 				75AEB6D7273AD9920073352E /* SwiftmalError.swift in Sources */,
 				753DAB072732560C007A5058 /* parsing.swift in Sources */,
 				753DAAFB27325335007A5058 /* swiftmal_test.swift in Sources */,
+				75AEB6DF273B28DE0073352E /* Collection+extract.swift in Sources */,
 				753DAB0827325610007A5058 /* main.swift in Sources */,
 				753DAB0627325603007A5058 /* Expression.swift in Sources */,
 			);

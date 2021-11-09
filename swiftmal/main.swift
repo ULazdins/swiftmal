@@ -1,10 +1,3 @@
-//
-//  main.swift
-//  swiftmal
-//
-//  Created by Uģis Lazdiņš on 03/11/2021.
-//
-
 import Foundation
 
 func READ(_ s: String) throws -> Expression {
@@ -17,23 +10,30 @@ func READ(_ s: String) throws -> Expression {
     return output
 }
 
-func EVAL(_ s: Expression) throws -> Expression {
-    return try eval(s)
+func EVAL(_ s: Expression, environment: Environment) throws -> Expression {
+    return try eval(s, environment: environment)
 }
 
 func PRINT(_ s: Expression) -> String {
     return s.print()
 }
 
-func rep(_ s: String) throws -> String {
-    return PRINT(try EVAL(try READ(s)))
+func rep(_ s: String, environment: Environment) throws -> String {
+    return PRINT(
+        try EVAL(
+            try READ(s),
+            environment: environment
+        )
+    )
 }
+
+let root = Environment.getRoot()
 
 while true {
     print("user> ", terminator: "")
     guard let s = readLine() else { break }
     do {
-        try print(rep(s))
+        try print(rep(s, environment: root))
     } catch(let e) {
         print("Error: \(e)")
     }

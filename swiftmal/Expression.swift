@@ -35,60 +35,42 @@ public enum Expression: Equatable {
         }
     }
     
-    static var intPath: CasePath<Expression, Int> {
-        _intPath
-    }
-    static var symbolPath: CasePath<Expression, String> {
-        _symbolPath
-    }
-    static var idPath: CasePath<Expression, Expression> {
-        _idPath
-    }
+    static var intPath = CasePath<Expression, Int>(
+        embed: { int in
+            Expression.int(int)
+        },
+        extract: { expression in
+          guard
+            case let .int(int) = expression else { return nil }
+            return int
+        }
+    )
+    static var symbolPath = CasePath<Expression, String>(
+        embed: { symbol in
+            Expression.symbol(symbol)
+        },
+        extract: { expression in
+          guard
+            case let .symbol(symbol) = expression else { return nil }
+            return symbol
+        }
+    )
+    static var listPath = CasePath<Expression, [Expression]>(
+        embed: { list in
+            Expression.list(list)
+        },
+        extract: { expression in
+          guard
+            case let .list(list) = expression else { return nil }
+            return list
+        }
+    )
+    static var idPath = CasePath<Expression, Expression>(
+        embed: { expression in
+            expression
+        },
+        extract: { expression in
+            expression
+        }
+    )
 }
-
-let _intPath = CasePath<Expression, Int>(
-  embed: { int in
-      Expression.int(int)
-  },
-  extract: { expression in
-    guard
-      case let .int(int) = expression else { return nil }
-      return int
-  }
-)
-let _symbolPath = CasePath<Expression, String>(
-  embed: { symbol in
-      Expression.symbol(symbol)
-  },
-  extract: { expression in
-    guard
-      case let .symbol(symbol) = expression else { return nil }
-      return symbol
-  }
-)
-let _idPath = CasePath<Expression, Expression>(
-  embed: { expression in
-      expression
-  },
-  extract: { expression in
-      expression
-  }
-)
-
-extension Array where Element == Expression {
-    func extract<T, U>(casePath1: CasePath<Expression, T>, casePath2: CasePath<Expression, U>) throws -> (T, U) {
-        if self.count != 2 {
-            throw SwiftmalError("`Expecting to have exactly 2 parameters")
-        }
-        
-        guard let t: T = (casePath1).extract(from: self[0]) else {
-            throw SwiftmalError("Can't convert \(self[0]), to expected value of \(T.self)")
-        }
-        guard let u: U = (casePath2).extract(from: self[1]) else {
-            throw SwiftmalError("Can't convert \(self[1]), to expected value of \(U.self)")
-        }
-        
-        return (t, u)
-    }
-}
-
