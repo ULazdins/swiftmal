@@ -9,6 +9,23 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
                 return try def(params.dropFirst(0), environment: environment)
             case "let*":
                 return try `let`(params.dropFirst(0), environment: environment)
+            case "if":
+                let conditionExpression = try params.extract(offset: 1, casePath: Expression.idPath)
+                
+                let conditionResult = try eval(conditionExpression, environment: environment)
+                
+                if conditionResult != .nil && conditionResult != .bool(false) {
+                    let trueExpression = try params.extract(offset: 2, casePath: Expression.idPath)
+                    return try eval(trueExpression, environment: environment)
+                } else {
+                    if params.count > 3 {
+                        let flseExpression = try params.extract(offset: 3, casePath: Expression.idPath)
+                        return try eval(flseExpression, environment: environment)
+                    } else {
+                        return .nil
+                    }
+                }
+                
             default:
                 return try builtin(symbol, params.dropFirst(0), environment: environment)
             }

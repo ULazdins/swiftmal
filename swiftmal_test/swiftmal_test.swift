@@ -103,4 +103,12 @@ class swiftmal_test: XCTestCase {
         XCTAssertEqual(try READ("  true  "), Expression.bool(true))
         XCTAssertEqual(try rep("true", environment: root), "true")
     }
+    
+    func testIf() throws {
+        let root = Environment.getRoot()
+        
+        XCTAssertEqual(try rep("(if true (+ 1 7) (+ 1 8))", environment: root), "8")
+        XCTAssertEqual(try rep("(if false (+ 1 7) (+ 1 8))", environment: root), "9")
+        XCTAssertEqual(try rep("(if false 5)", environment: root), "nil")
+    }
 }
