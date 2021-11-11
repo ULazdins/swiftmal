@@ -10,16 +10,16 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
             case "let*":
                 return try `let`(params.dropFirst(0), environment: environment)
             case "if":
-                let conditionExpression = try params.extract(offset: 1, casePath: Expression.idPath)
+                let conditionExpression = try params.extract(offset: 1, casePath: /Expression.self)
                 
                 let conditionResult = try eval(conditionExpression, environment: environment)
                 
                 if conditionResult != .nil && conditionResult != .bool(false) {
-                    let trueExpression = try params.extract(offset: 2, casePath: Expression.idPath)
+                    let trueExpression = try params.extract(offset: 2, casePath: /Expression.self)
                     return try eval(trueExpression, environment: environment)
                 } else {
                     if params.count > 3 {
-                        let flseExpression = try params.extract(offset: 3, casePath: Expression.idPath)
+                        let flseExpression = try params.extract(offset: 3, casePath: /Expression.self)
                         return try eval(flseExpression, environment: environment)
                     } else {
                         return .nil
@@ -47,8 +47,8 @@ func def(_ params: ArraySlice<Expression>, environment: Environment) throws -> E
     let tail = params.dropFirst()
     
     let (symbol, value) = try tail.extract(
-        casePath1: Expression.symbolPath,
-        casePath2: Expression.idPath
+        casePath1: /Expression.symbol,
+        casePath2: /Expression.self
     )
     
     let evaluated = try eval(value, environment: environment)
@@ -62,8 +62,8 @@ func `let`(_ params: ArraySlice<Expression>, environment: Environment) throws ->
     let tail = params.dropFirst()
     
     let (bindings, expression) = try tail.extract(
-        casePath1: Expression.listPath,
-        casePath2: Expression.idPath
+        casePath1: /Expression.list,
+        casePath2: /Expression.self
     )
     
     let childEnvironment = Environment(symbolMap: [:], parent: environment)
@@ -73,8 +73,8 @@ func `let`(_ params: ArraySlice<Expression>, environment: Environment) throws ->
         let pair = pairs.prefix(2)
         
         let (symbol, value) = try pair.extract(
-            casePath1: Expression.symbolPath,
-            casePath2: Expression.idPath
+            casePath1: /Expression.symbol,
+            casePath2: /Expression.self
         )
         
         environment.define(
@@ -88,22 +88,25 @@ func `let`(_ params: ArraySlice<Expression>, environment: Environment) throws ->
     return try eval(expression, environment: childEnvironment)
 }
 
+import CasePaths
+
 func builtin(_ symbol: String, _ params: ArraySlice<Expression>, environment: Environment) throws -> Expression {
     let f = try environment.find(symbol)
     
-    let tail = Array(params.dropFirst())
-    
-    let extracted = try tail.extract(
-        casePath1: Expression.idPath,
-        casePath2: Expression.idPath
-    )
-    
-    guard let f2 = f as? (Int, Int) -> Int else {
-        throw SwiftmalError("Not a function")
+    let tail = try Array(params.dropFirst()).map {
+        try eval($0, environment: environment)
     }
     
-    let int1 = try eval(extracted.0, environment: environment).getInt()
-    let int2 = try eval(extracted.1, environment: environment).getInt()
+    let (int1, int2) = try tail.extract(
+        casePath1: /Expression.int,
+        casePath2: /Expression.int
+    )
     
-    return .int(f2(int1, int2))
+    if let f2 = f as? (Int, Int) -> Int {
+        return .int(f2(int1, int2))
+    } else if let f2 = f as? (Int, Int) -> Bool {
+        return .bool(f2(int1, int2))
+    }
+    
+    throw SwiftmalError("Not a function")
 }

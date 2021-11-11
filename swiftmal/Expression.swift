@@ -41,42 +41,4 @@ public enum Expression: Equatable {
         }
     }
     
-    static var intPath = CasePath<Expression, Int>(
-        embed: { int in
-            Expression.int(int)
-        },
-        extract: { expression in
-          guard
-            case let .int(int) = expression else { return nil }
-            return int
-        }
-    )
-    static var symbolPath = CasePath<Expression, String>(
-        embed: { symbol in
-            Expression.symbol(symbol)
-        },
-        extract: { expression in
-          guard
-            case let .symbol(symbol) = expression else { return nil }
-            return symbol
-        }
-    )
-    static var listPath = CasePath<Expression, [Expression]>(
-        embed: { list in
-            Expression.list(list)
-        },
-        extract: { expression in
-          guard
-            case let .list(list) = expression else { return nil }
-            return list
-        }
-    )
-    static var idPath = CasePath<Expression, Expression>(
-        embed: { expression in
-            expression
-        },
-        extract: { expression in
-            expression
-        }
-    )
 }
