@@ -22,23 +22,4 @@ public enum Expression: Equatable {
             return "\(string)"
         }
     }
-    
-    func getInt() throws -> Int {
-        switch self {
-        case .int(let int):
-            return int
-        default:
-            throw SwiftmalError("Not an integer")
-        }
-    }
-    
-    func getSymbol() throws -> String {
-        switch self {
-        case .symbol(let symbol):
-            return symbol
-        default:
-            throw SwiftmalError("Not a symbol")
-        }
-    }
-    
 }

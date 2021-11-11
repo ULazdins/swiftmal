@@ -1,9 +1,10 @@
 import Foundation
+import CasePaths
 
 func eval(_ exp: Expression, environment: Environment) throws -> Expression {
     switch exp {
     case .list(let params):
-        if let symbol = try params.first?.getSymbol() {
+        if let first = params.first, let symbol = (/Expression.symbol).extract(from: first) {
             switch symbol {
             case "def!":
                 return try def(params.dropFirst(0), environment: environment)
