@@ -31,6 +31,11 @@ extension Environment {
             "-": { (a: Int, b: Int) in a - b },
             "*": { (a: Int, b: Int) in a * b },
             "/": { (a: Int, b: Int) in a / b },
+            "=": { (a: Int, b: Int) in a == b },
+            "<": { (a: Int, b: Int) in a < b },
+            ">": { (a: Int, b: Int) in a > b },
+            "<=": { (a: Int, b: Int) in a <= b },
+            ">=": { (a: Int, b: Int) in a >= b },
         ])
     }
 }

@@ -41,7 +41,7 @@ let bool: AnyParser<Substring, Expression> = Skip(whitespace)
     .take(`true`.orElse(`false`))
     .eraseToAnyParser()
 
-let symbolCharacterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "+-/*!"))
+let symbolCharacterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "+-/*!=<>"))
 
 let string: AnyParser<Substring, Substring> = Prefix<Substring>(
     minLength: 1,

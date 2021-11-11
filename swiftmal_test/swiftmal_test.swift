@@ -111,4 +111,13 @@ class swiftmal_test: XCTestCase {
         XCTAssertEqual(try rep("(if false (+ 1 7) (+ 1 8))", environment: root), "9")
         XCTAssertEqual(try rep("(if false 5)", environment: root), "nil")
     }
+    
+    func testComparison() throws {
+        let root = Environment.getRoot()
+        
+        XCTAssertEqual(try rep("(= 2 1)", environment: root), "false")
+        XCTAssertEqual(try rep("(= 2 (+ 1 1))", environment: root), "true")
+        XCTAssertEqual(try rep("(> 2 1)", environment: root), "true")
+        XCTAssertEqual(try rep("(<= (- 4 2) 2)", environment: root), "true")
+    }
 }
