@@ -4,32 +4,32 @@ import Parsing
 
 class swiftmal_test: XCTestCase {
     func testRead() throws {
-        XCTAssertEqual(try READ("  123 "), Expression.int(123))
-        XCTAssertEqual(try READ("  -123 "), Expression.int(-123))
-        XCTAssertEqual(try READ(" abc   "), Expression.symbol("abc"))
-        XCTAssertEqual(try READ(" -abc-def   "), Expression.symbol("-abc-def"))
-        XCTAssertEqual(try READ(" ( abc  ) "), Expression.list([.symbol("abc")]))
+        XCTAssertEqual(try READ("  123 "), 123)
+        XCTAssertEqual(try READ("  -123 "), -123)
+        XCTAssertEqual(try READ(" abc   "), "abc")
+        XCTAssertEqual(try READ(" -abc-def   "), "-abc-def")
+        XCTAssertEqual(try READ(" ( abc  ) "), .list(["abc"]))
         XCTAssertEqual(
             try READ(" (  abc  def  sss 22 )  "),
-            Expression.list([.symbol("abc"), .symbol("def"), .symbol("sss"), .int(22)])
+            .list(["abc", "def", "sss", 22])
         )
         XCTAssertEqual(
             try READ(" ( abc ( aa ) ) "),
-            Expression.list([.symbol("abc"), .list([.symbol("aa")])])
+            .list(["abc", .list(["aa"])])
         )
         XCTAssertEqual(
             try READ("   (d dd 3)"),
-            Expression.list([.symbol("d"), .symbol("dd"), .int(3)])
+            .list(["d", "dd", 3])
         )
         XCTAssertEqual(
             try READ("( + 2 (* 3 4) )"),
-            Expression.list([
-                .symbol("+"),
-                .int(2),
+            .list([
+                "+",
+                2,
                 .list([
-                    .symbol("*"),
-                    .int(3),
-                    .int(4)
+                    "*",
+                    3,
+                    4
                 ])
             ])
         )
@@ -40,26 +40,26 @@ class swiftmal_test: XCTestCase {
         
         XCTAssertEqual(
             try EVAL(
-                Expression.list([.symbol("+"), .int(2), .int(3)]),
+                .list(["+", 2, 3]),
                 environment: root
             ),
-            Expression.int(5)
+            5
         )
         XCTAssertEqual(
             try EVAL(
-                Expression.list([
-                    .symbol("+"),
-                    .int(2),
-                    .list([.symbol("*"),.int(3), .int(4)])
+                .list([
+                    "+",
+                    2,
+                    .list(["*", 3, 4])
                 ]),
                 environment: root
             ),
-            Expression.int(14)
+            14
         )
         
         XCTAssertThrowsError(
             try EVAL(
-                Expression.list([.symbol("Z"), .int(2), .int(3)]),
+                .list(["Z", 2, 3]),
                 environment: root
             )
         )

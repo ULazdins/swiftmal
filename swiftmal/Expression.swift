@@ -23,3 +23,28 @@ public enum Expression: Equatable {
         }
     }
 }
+
+extension Expression: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Int) {
+        self = .int(value)
+    }
+    
+    public typealias IntegerLiteralType = Int
+}
+
+extension Expression: ExpressibleByBooleanLiteral {
+    public init(booleanLiteral value: Bool) {
+        self = .bool(value)
+    }
+    
+    public typealias BooleanLiteralType = Bool
+    
+}
+
+extension Expression: ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self = .symbol(value)
+    }
+}
