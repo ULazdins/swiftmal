@@ -26,6 +26,13 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
                         return .nil
                     }
                 }
+            case "map":
+                let p = try params.dropFirst().extract(casePath1: /Expression.symbol, casePath2: /Expression.list)
+                let f = try environment.findFunc(p.0)
+                if case Expression.list(let list) = params[2] {
+                    return try .list(list.map({ try f.execute([$0]) }))
+                }
+                throw SwiftmalError("Param at position 2 is not a list")
             default:
                 let f = try environment.findFunc(symbol)
                 let tail = try params.dropFirst().map({ try eval($0, environment: environment) })

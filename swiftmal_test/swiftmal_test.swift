@@ -35,6 +35,10 @@ class swiftmal_test: XCTestCase {
         )
     }
     
+    func testPrint() throws {
+        XCTAssertEqual(PRINT(.list([1, 2, 3])), "(1 2 3)")
+    }
+    
     func testEval() throws {
         let root = Environment.getRoot()
         
@@ -119,5 +123,17 @@ class swiftmal_test: XCTestCase {
         XCTAssertEqual(try rep("(= 2 (+ 1 1))", environment: root), "true")
         XCTAssertEqual(try rep("(> 2 1)", environment: root), "true")
         XCTAssertEqual(try rep("(<= (- 4 2) 2)", environment: root), "true")
+    }
+    
+    func testAddOne() throws {
+        let root = Environment.getRoot()
+        
+        XCTAssertEqual(try rep("(++ 2)", environment: root), "3")
+    }
+    
+    func testMap() throws {
+        let root = Environment.getRoot()
+        
+        XCTAssertEqual(try rep("(map ++ (2 12 -1))", environment: root), "(3 13 0)")
     }
 }

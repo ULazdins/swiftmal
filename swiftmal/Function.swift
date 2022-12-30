@@ -6,6 +6,17 @@ struct Function {
 }
 
 extension Function {
+    static func fromOne(_ symbol: String, _ f: @escaping (Int) -> Int) -> Function {
+        Function(symbol: symbol) { expressions in
+            let int1 = try expressions.extract(
+                offset: 0,
+                casePath: /Expression.int
+            )
+            
+            return .int(f(int1))
+        }
+    }
+    
     static func fromTwo(_ symbol: String, _ f: @escaping (Int, Int) -> Int) -> Function {
         Function(symbol: symbol) { expressions in
             let (int1, int2) = try expressions.extract(

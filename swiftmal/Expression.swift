@@ -11,7 +11,7 @@ public enum Expression: Equatable {
     func print() -> String {
         switch self {
         case .list(let params):
-            return params.map({$0.print()}).joined(separator:" ")
+            return "(" + params.map({$0.print()}).joined(separator:" ") + ")"
         case .int(let int):
             return "\(int)"
         case .nil:

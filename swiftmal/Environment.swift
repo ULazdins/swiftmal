@@ -42,6 +42,7 @@ extension Environment {
     static func getRoot() -> Environment {
         Environment(
             functions: [
+                .fromOne("++", { $0 + 1 }),
                 .fromTwo("+", { $0 + $1 }),
                 .fromTwo("-", { $0 - $1 }),
                 .fromTwo("*", { $0 * $1 }),
