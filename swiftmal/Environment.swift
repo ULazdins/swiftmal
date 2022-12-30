@@ -1,17 +1,19 @@
 class Environment {
-    private var symbolMap: [String: Any]
+    private var symbolMap: [String: Expression]
+    private var functions: [Function]
     let parent: Environment?
     
-    init(symbolMap: [String: Any] = [:], parent: Environment? = nil) {
+    init(symbolMap: [String: Expression] = [:], functions: [Function] = [], parent: Environment? = nil) {
         self.symbolMap = symbolMap
+        self.functions = functions
         self.parent = parent
     }
     
-    func define(_ s: String, value: Any) {
+    func define(_ s: String, value: Expression) {
         symbolMap[s] = value
     }
     
-    func find(_ s: String) throws -> Any {
+    func find(_ s: String) throws -> Expression {
         if let value = symbolMap[s] {
             return value
         }
@@ -22,20 +24,34 @@ class Environment {
         
         throw SwiftmalError("`\(s)` is not defined")
     }
+    
+    func findFunc(_ s: String) throws -> Function {
+        if let f = functions.first(where: { $0.symbol == s }) {
+            return f
+        }
+        
+        if let parentValue = try parent?.findFunc(s) {
+            return parentValue
+        }
+        
+        throw SwiftmalError("`\(s)` is not defined")
+    }
 }
 
 extension Environment {
     static func getRoot() -> Environment {
-        return Environment(symbolMap: [
-            "+": { (a: Int, b: Int) in a + b },
-            "-": { (a: Int, b: Int) in a - b },
-            "*": { (a: Int, b: Int) in a * b },
-            "/": { (a: Int, b: Int) in a / b },
-            "=": { (a: Int, b: Int) in a == b },
-            "<": { (a: Int, b: Int) in a < b },
-            ">": { (a: Int, b: Int) in a > b },
-            "<=": { (a: Int, b: Int) in a <= b },
-            ">=": { (a: Int, b: Int) in a >= b },
-        ])
+        Environment(
+            functions: [
+                .fromTwo("+", { $0 + $1 }),
+                .fromTwo("-", { $0 - $1 }),
+                .fromTwo("*", { $0 * $1 }),
+                .fromTwo("/", { $0 / $1 }),
+                .fromTwo("=", { $0 == $1 }),
+                .fromTwo(">", { $0 > $1 }),
+                .fromTwo("<", { $0 < $1 }),
+                .fromTwo("<=", { $0 <= $1 }),
+                .fromTwo(">=", { $0 >= $1 })
+            ]
+        )
     }
 }

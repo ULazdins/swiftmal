@@ -7,9 +7,9 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
         if let first = params.first, let symbol = (/Expression.symbol).extract(from: first) {
             switch symbol {
             case "def!":
-                return try def(params.dropFirst(0), environment: environment)
+                return try def(params.dropFirst(), environment: environment)
             case "let*":
-                return try `let`(params.dropFirst(0), environment: environment)
+                return try `let`(params.dropFirst(), environment: environment)
             case "if":
                 let conditionExpression = try params.extract(offset: 1, casePath: /Expression.self)
                 
@@ -26,9 +26,10 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
                         return .nil
                     }
                 }
-                
             default:
-                return try builtin(symbol, params.dropFirst(0), environment: environment)
+                let f = try environment.findFunc(symbol)
+                let tail = try params.dropFirst().map({ try eval($0, environment: environment) })
+                return try f.execute(tail)
             }
         } else {
             return .list(params)
@@ -36,18 +37,12 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
     case .int, .nil, .bool:
         return exp
     case .symbol(let string):
-        let symbol = try environment.find(string)
-        guard let expression = symbol as? Expression else {
-            throw SwiftmalError("`\(symbol)` not an Expression")
-        }
-        return expression
+        return try environment.find(string)
     }
 }
 
 func def(_ params: ArraySlice<Expression>, environment: Environment) throws -> Expression {
-    let tail = params.dropFirst()
-    
-    let (symbol, value) = try tail.extract(
+    let (symbol, value) = try params.extract(
         casePath1: /Expression.symbol,
         casePath2: /Expression.self
     )
@@ -59,15 +54,13 @@ func def(_ params: ArraySlice<Expression>, environment: Environment) throws -> E
     return evaluated
 }
 
-func `let`(_ params: ArraySlice<Expression>, environment: Environment) throws -> Expression {
-    let tail = params.dropFirst()
-    
+func `let`(_ tail: ArraySlice<Expression>, environment: Environment) throws -> Expression {
     let (bindings, expression) = try tail.extract(
         casePath1: /Expression.list,
         casePath2: /Expression.self
     )
     
-    let childEnvironment = Environment(symbolMap: [:], parent: environment)
+    let childEnvironment = Environment(parent: environment)
     
     var pairs: ArraySlice<Expression> = bindings.dropFirst(0)
     while pairs.count > 0 {
@@ -87,27 +80,4 @@ func `let`(_ params: ArraySlice<Expression>, environment: Environment) throws ->
     }
     
     return try eval(expression, environment: childEnvironment)
-}
-
-import CasePaths
-
-func builtin(_ symbol: String, _ params: ArraySlice<Expression>, environment: Environment) throws -> Expression {
-    let f = try environment.find(symbol)
-    
-    let tail = try Array(params.dropFirst()).map {
-        try eval($0, environment: environment)
-    }
-    
-    let (int1, int2) = try tail.extract(
-        casePath1: /Expression.int,
-        casePath2: /Expression.int
-    )
-    
-    if let f2 = f as? (Int, Int) -> Int {
-        return .int(f2(int1, int2))
-    } else if let f2 = f as? (Int, Int) -> Bool {
-        return .bool(f2(int1, int2))
-    }
-    
-    throw SwiftmalError("Not a function")
 }
