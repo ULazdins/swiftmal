@@ -36,6 +36,19 @@ class Environment {
         
         throw SwiftmalError("`\(s)` is not defined")
     }
+    
+    func defineFunc(_ s: String, paramNames: [String], expression: Expression) {
+        functions.append(.init(symbol: s, execute: { expressions in
+            guard paramNames.count == expressions.count else {
+                throw SwiftmalError("Function `\(s)` expects \(paramNames.count) params, but got \(expressions.count)")
+            }
+            let b = zip(paramNames, expressions).reduce(into: [String: Expression]()) { partialResult, pair in
+                partialResult[pair.0] = pair.1
+            }
+            
+            return try eval(expression, environment: Environment(symbolMap: b, parent: self))
+        }))
+    }
 }
 
 extension Environment {

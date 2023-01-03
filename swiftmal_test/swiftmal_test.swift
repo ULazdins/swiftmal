@@ -136,4 +136,12 @@ class swiftmal_test: XCTestCase {
         
         XCTAssertEqual(try rep("(map ++ (2 12 -1))", environment: root), "(3 13 0)")
     }
+    
+    func testDefun() throws {
+        let root = Environment.getRoot()
+        
+        XCTAssertNoThrow(try rep("(defun add (a b) (+ a b))", environment: root))
+        
+        XCTAssertEqual(try rep("(add 1 4)", environment: root), "5")
+    }
 }

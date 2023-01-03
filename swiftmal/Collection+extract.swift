@@ -23,5 +23,14 @@ extension Collection where Element == Expression {
         
         return (t, u)
     }
+    
+    func extractSymbols() throws -> [String] {
+        return try self.map { expression in
+            guard let symbol = (/Expression.symbol).extract(from: expression) else {
+                throw SwiftmalError("`\(expression)` is not a symbol!")
+            }
+            return symbol
+        }
+    }
 }
 

@@ -33,6 +33,13 @@ func eval(_ exp: Expression, environment: Environment) throws -> Expression {
                     return try .list(list.map({ try f.execute([$0]) }))
                 }
                 throw SwiftmalError("Param at position 2 is not a list")
+            case "defun": // (defun add (a b) (+ a b))
+                let name = try params.extract(offset: 1, casePath: /Expression.symbol)
+                let parameters = try params.extract(offset: 2, casePath: /Expression.list)
+                let expression = params[3]
+                try environment.defineFunc(name, paramNames: parameters.extractSymbols(), expression: expression)
+                
+                return .nil
             default:
                 let f = try environment.findFunc(symbol)
                 let tail = try params.dropFirst().map({ try eval($0, environment: environment) })
